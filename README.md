@@ -1,73 +1,71 @@
-# Welcome to your Lovable project
+# SeminarHub
 
-## Project info
+SeminarHub is a web application for discovering, managing, and enrolling in academic and scientific seminars. It provides features for users, moderators, and administrators.
 
-**URL**: https://lovable.dev/projects/b760cf1a-5ea4-411a-b7c3-c4377a8e8040
+![Home page](public/Preview1.png)
+![Admin dashboard](public/Preview2.png)
 
-## How can I edit this code?
+## Features
 
-There are several ways of editing your application.
+- **Seminar Discovery:** Browse and search for seminars by topic, date, or keyword.
+- **Seminar Details:** View detailed information about each seminar, including description, agenda, location (with map integration), presenter, and enrollment numbers.
+- **User Enrollment:** Registered users can enroll in seminars.
+- **My Enrollments:** Users can view a list of seminars they have enrolled in.
+- **Moderator Dashboard:** Moderators can manage seminars (create, edit, delete) and view seminar lists.
+- **Admin Dashboard:** Administrators can view site statistics, including total seminars, users, locations, upcoming events, and growth trends visualized with charts.
+- **Role-Based Access Control:** Different features are available based on user roles (User, Moderator, Admin).
+- **Responsive Design:** Adapts to various screen sizes using Bootstrap.
 
-**Use Lovable**
-
-Simply visit the [Lovable Project](https://lovable.dev/projects/b760cf1a-5ea4-411a-b7c3-c4377a8e8040) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
-
-**Edit a file directly in GitHub**
-
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
-
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
+## Technologies Used
 
 This project is built with:
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+- **Vite:** Fast frontend build tool.
+- **React:** JavaScript library for building user interfaces.
+- **TypeScript:** Typed superset of JavaScript.
+- **Bootstrap 5:** CSS framework for styling and layout.
+- **React Router DOM:** For client-side routing.
+- **React Leaflet:** For interactive map integration (based on Leaflet.js).
+- **Chart.js & react-chartjs-2:** For displaying charts in the Admin Dashboard.
+- **Sonner:** For toast notifications.
+- **date-fns:** For date utility functions.
 
-## How can I deploy this project?
+## Getting Started
 
-Simply open [Lovable](https://lovable.dev/projects/b760cf1a-5ea4-411a-b7c3-c4377a8e8040) and click on Share -> Publish.
+To run this project locally, follow these steps:
 
-## Can I connect a custom domain to my Lovable project?
+1.  **Clone the repository:**
 
-Yes, you can!
+    ```sh
+    git clone https://github.com/albert2704/SeminarHub.git
+    cd SeminarHub
+    ```
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+2.  **Install dependencies:**
+    Make sure you have Node.js and npm installed ([install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)).
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+    ```sh
+    npm install
+    ```
+
+3.  **Run the development server:**
+    This command starts the Vite development server with hot module replacement (HMR).
+    ```sh
+    npm run dev
+    ```
+    The application will typically be available at `http://localhost:5173` (or the next available port).
+
+## Available Scripts
+
+- `npm run dev`: Starts the development server.
+- `npm run build`: Builds the application for production.
+- `npm run lint`: Lints the codebase using ESLint.
+- `npm run preview`: Serves the production build locally for preview.
+
+## Demo Accounts
+
+You can use the following demo accounts to test different roles:
+
+- **User:** Any email/password combination (e.g., `user@example.com` / `password`)
+- **Moderator:** `moderator@example.com` / `password`
+- **Admin:** `admin@example.com` / `password`

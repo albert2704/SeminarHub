@@ -1,10 +1,27 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+  /* These should be the light theme colors */
+  --custom-primary-color: #8B5CF6;
+  --custom-primary-hover-color: #7C3AED;
+  --custom-primary-subtle-bg: rgba(139, 92, 246, 0.1);
+  --custom-link-color: #8B5CF6;
+  --custom-link-hover-color: #7C3AED;
+  --custom-body-color: #333; /* Default body text color */
+  --custom-body-bg: #f9f9fc; /* Default body background */
+  --custom-card-border-color: #eaeaea;
+  --custom-card-shadow-color: rgba(0, 0, 0, 0.02);
+  --custom-card-hover-shadow-color: rgba(0, 0, 0, 0.05);
+  --custom-nav-link-color: black;
+  --custom-nav-link-active-color: #7C3AED;
+  --custom-muted-color: #6c757d;
+}
 
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  color: #333;
-  background-color: #f9f9fc;
+  /* Rely on Bootstrap defaults or explicitly set light theme colors if needed */
+  color: var(--bs-body-color);
+  background-color: var(--bs-body-bg);
 }
 
 /* Navbar styling */
@@ -12,37 +29,108 @@ body {
   display: flex;
   align-items: center;
   font-weight: 600;
+  margin-right: 2.5rem; /* Add space after the brand */
 }
 
 .navbar-brand svg {
   margin-right: 8px;
 }
 
+/* Remove outline/border from navbar toggler on focus/active */
+.navbar-toggler:focus,
+.navbar-toggler:active,
+.navbar-toggler-icon:focus {
+  outline: none !important;
+  box-shadow: none !important;
+  border-color: transparent !important; /* Optional: ensure border doesn't appear */
+}
+
 /* Button overrides */
 .btn-primary {
-  background-color: #8B5CF6;
-  border-color: #8B5CF6;
+  background-color: var(--custom-primary-color);
+  border-color: var(--custom-primary-color);
 }
 
 .btn-primary:hover, .btn-primary:focus {
-  background-color: #7C3AED;
-  border-color: #7C3AED;
+  background-color: var(--custom-primary-hover-color);
+  border-color: var(--custom-primary-hover-color);
 }
 
 .btn-outline-primary {
-  border-color: #8B5CF6;
-  color: #8B5CF6;
+  border-color: var(--custom-primary-color);
+  color: var(--custom-primary-color);
 }
 
 .btn-outline-primary:hover {
-  background-color: #8B5CF6;
-  color: white;
+  background-color: var(--custom-primary-color);
+  color: white; /* Keep text white on hover for light mode */
+}
+
+/* General Button Focus Style */
+.btn:focus, .btn:focus-visible {
+  outline: 0; /* Remove default outline */
+  box-shadow: 0 0 0 0.25rem rgba(139, 92, 246, 0.35); /* Custom purple focus ring */
+}
+
+/* Specific Focus Style for Primary Button */
+.btn-primary:focus, .btn-primary:focus-visible {
+  background-color: var(--custom-primary-hover-color); /* Use hover color */
+  border-color: var(--custom-primary-hover-color);
+  box-shadow: 0 0 0 0.25rem rgba(139, 92, 246, 0.5); /* Slightly stronger focus ring */
+}
+
+/* Specific Focus Style for Outline Primary Button */
+.btn-outline-primary:focus, .btn-outline-primary:focus-visible {
+  color: var(--custom-primary-color); /* Keep text purple */
+  background-color: var(--custom-primary-subtle-bg); /* Optional: subtle background */
+  border-color: var(--custom-primary-color);
+  box-shadow: 0 0 0 0.25rem rgba(139, 92, 246, 0.35);
+}
+
+/* Specific Focus Style for Secondary/Other Outline Buttons (Example) */
+.btn-outline-secondary:focus, .btn-outline-secondary:focus-visible {
+  box-shadow: 0 0 0 0.25rem rgba(108, 117, 125, 0.5); /* Example: Gray focus ring */
+  /* Add background/border if needed */
+}
+
+/* General Button Focus and Active Style */
+.btn:focus, .btn:focus-visible, .btn:active {
+  outline: 0 !important; /* Remove default outline */
+  box-shadow: 0 0 0 0.25rem rgba(139, 92, 246, 0.35) !important; /* Custom purple focus ring */
+  /* Prevent default blue background/border changes on active/focus */
+  background-color: inherit !important;
+  border-color: inherit !important;
+  color: inherit !important; /* Ensure text color doesn't change unexpectedly */
+}
+
+/* Specific Focus/Active Style for Primary Button */
+.btn-primary:focus, .btn-primary:focus-visible, .btn-primary:active {
+  background-color: var(--custom-primary-hover-color) !important; /* Use hover color */
+  border-color: var(--custom-primary-hover-color) !important;
+  color: white !important; /* Ensure text stays white */
+  box-shadow: 0 0 0 0.25rem rgba(139, 92, 246, 0.5) !important; /* Slightly stronger focus ring */
+}
+
+/* Specific Focus/Active Style for Outline Primary Button */
+.btn-outline-primary:focus, .btn-outline-primary:focus-visible, .btn-outline-primary:active {
+  color: var(--custom-primary-color) !important; /* Keep text purple */
+  background-color: var(--custom-primary-subtle-bg) !important; /* Use subtle background */
+  border-color: var(--custom-primary-color) !important;
+  box-shadow: 0 0 0 0.25rem rgba(139, 92, 246, 0.35) !important;
+}
+
+/* Specific Focus/Active Style for Secondary/Other Outline Buttons (Example) */
+.btn-outline-secondary:focus, .btn-outline-secondary:focus-visible, .btn-outline-secondary:active {
+  color: var(--bs-secondary-color) !important; /* Example: Keep text gray */
+  background-color: var(--bs-secondary-bg-subtle) !important; /* Example: Use subtle gray background */
+  border-color: var(--bs-secondary-border-subtle) !important; /* Example: Use subtle gray border */
+  box-shadow: 0 0 0 0.25rem rgba(108, 117, 125, 0.5) !important; /* Example: Gray focus ring */
 }
 
 /* Topic tags */
 .topic-tag {
-  background-color: rgba(139, 92, 246, 0.1);
-  color: #8B5CF6;
+  background-color: var(--custom-primary-subtle-bg);
+  color: var(--custom-primary-color);
   border-radius: 50px;
   padding: 4px 12px;
   font-size: 0.85rem;
@@ -55,13 +143,22 @@ body {
 /* Card styling */
 .card {
   border-radius: 12px;
-  border: 1px solid #eaeaea;
+  border: 1px solid var(--bs-border-color); /* Use Bootstrap variable */
   transition: all 0.2s ease;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+  box-shadow: 0 2px 10px var(--custom-card-shadow-color);
+  background-color: var(--bs-card-bg);
+  color: var(--bs-body-color);
+}
+
+/* Set fixed height for seminar card images */
+.seminar-card-img {
+  height: 200px; /* Adjust height as needed */
+  object-fit: cover; /* Crop image to fit without distortion */
+  width: 100%; /* Ensure it takes full width */
 }
 
 .card:hover {
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 5px 15px var(--custom-card-hover-shadow-color);
 }
 
 /* Dashboard stat cards */
@@ -99,29 +196,102 @@ body {
   border: none;
   border-radius: 0;
   padding: 10px 16px;
-  color: #6c757d;
+  color: var(--custom-muted-color);
   font-weight: 500;
 }
 
 .dashboard-tabs .nav-link.active {
   background-color: transparent;
-  color: #8B5CF6;
-  border-bottom: 2px solid #8B5CF6;
+  color: var(--custom-primary-color);
+  border-bottom: 2px solid var(--custom-primary-color);
 }
 
 /* Seminar details */
 .seminar-details-icon {
   margin-right: 10px;
-  color: #8B5CF6;
+  color: var(--custom-primary-color);
+}
+
+/* Set fixed height for seminar detail carousel images */
+.seminar-detail-carousel-img {
+  height: 400px; /* Adjust height as needed, likely taller than card image */
+  object-fit: cover; /* Crop image to fit without distortion */
+  width: 100%;
+}
+
+/* Speed up carousel transition */
+.carousel-item {
+  transition: transform 0.5s ease-in-out;
+}
+
+/* Style Pie Chart Legend Labels on Hover */
+#topicPieChartContainer ul > li:hover {
+  /* You can change background, text color, add underline, etc. */
+  /* Example: Slightly lighten the text color */
+  color: rgba(0, 0, 0, 0.5) !important; /* Adjust alpha for desired lightness */
+  cursor: pointer; /* Indicate interactivity */
+}
+
+/* Default pagination link color */
+.page-link {
+  color: #343a40; /* Dark gray color */
+}
+
+/* Customize active pagination button */
+.page-item.active .page-link {
+  background-color: #8B5CF6; /* Primary purple color */
+  border-color: #8B5CF6; /* Match border color */
+  color: white; /* Ensure text is readable */
+}
+
+/* Optional: Style hover state for active button if needed */
+.page-item.active .page-link:hover {
+  background-color: #7c4ee4; /* Slightly darker purple on hover */
+  border-color: #7c4ee4;
+  color: white; /* Keep text white on hover */
+}
+
+/* Optional: Style hover state for non-active buttons */
+.page-link:not(.active):hover {
+  color: #495057; /* Slightly different dark color on hover */
+  background-color: #e9ecef; /* Add a subtle background on hover for non-active */
+}
+
+/* Focus state for pagination links (using button focus variables) */
+.page-link:focus {
+  box-shadow: 0 0 0 0.25rem rgba(139, 92, 246, 0.35); /* Use button focus shadow */
+  color: inherit;
+  background-color: transparent; /* Prevent blue background on focus for non-active links */
+  outline: 0;
+}
+
+/* Ensure active pagination link keeps its background color when focused */
+.page-item.active .page-link:focus {
+  background-color: #8B5CF6; /* Keep purple background */
+  border-color: #8B5CF6;
+  color: white;
+  box-shadow: 0 0 0 0.25rem rgba(139, 92, 246, 0.5); /* Slightly stronger focus ring for active */
+}
+
+/* Focus/Active state for pagination links */
+.page-link:focus, .page-link:active {
+  box-shadow: 0 0 0 0.25rem rgba(139, 92, 246, 0.35) !important; /* Use button focus shadow */
+  color: inherit !important;
+  background-color: transparent !important; /* Prevent blue background on focus/active for non-active links */
+  outline: 0 !important;
+  border-color: #dee2e6 !important; /* Reset border color for non-active */
+}
+
+/* Ensure active pagination link keeps its background color when focused/active */
+.page-item.active .page-link:focus, .page-item.active .page-link:active {
+  background-color: #8B5CF6 !important; /* Keep purple background */
+  border-color: #8B5CF6 !important;
+  color: white !important;
+  box-shadow: 0 0 0 0.25rem rgba(139, 92, 246, 0.5) !important; /* Slightly stronger focus ring for active */
 }
 
 .seminar-detail-section {
   margin-bottom: 20px;
-}
-
-.seminar-detail-section .label {
-  font-weight: 500;
-  color: #6c757d;
 }
 
 /* Agenda items */
@@ -130,13 +300,19 @@ body {
   padding-left: 24px;
   margin-bottom: 15px;
 }
+.nav-link.active {
+  color: var(--custom-nav-link-active-color) !important;
+}
+.nav-link {
+  color: var(--custom-nav-link-color) !important;
+}
 
 .agenda-item::before {
   content: "";
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background-color: #8B5CF6;
+  background-color: var(--custom-primary-color);
   position: absolute;
   left: 0;
   top: 6px;
@@ -195,36 +371,88 @@ body {
 }
 
 .category-pill:hover, .category-pill.active {
-  background-color: #8B5CF6;
-  color: white;
+  background-color: var(--custom-primary-color);
+  color: white; /* Keep text white */
 }
 
 /* Make sure links are purple */
 a {
-  color: #8B5CF6;
+  color: var(--custom-link-color);
 }
 
 a:hover {
-  color: #7C3AED;
+  color: var(--custom-link-hover-color);
 }
 
 /* Make sure buttons and other elements with blue are changed to purple */
 .btn-link {
-  color: #8B5CF6;
+  color: var(--custom-link-color);
 }
 
 .btn-link:hover {
-  color: #7C3AED;
+  color: var(--custom-link-hover-color);
 }
 
 .text-primary {
-  color: #8B5CF6 !important;
+  color: var(--custom-primary-color) !important;
 }
 
 .bg-primary {
-  background-color: #8B5CF6 !important;
+  background-color: var(--custom-primary-color) !important;
 }
 
 .border-primary {
-  border-color: #8B5CF6 !important;
+  border-color: var(--custom-primary-color) !important;
+}
+
+/* Ensure subtle backgrounds adapt (using Bootstrap defaults) */
+.bg-light {
+  background-color: var(--bs-light-bg-subtle) !important; /* Use Bootstrap subtle variable */
+}
+
+.text-muted {
+  color: var(--bs-secondary-color) !important; /* Use Bootstrap variable */
+}
+
+/* Add padding to the bottom of the expanded navbar on smaller screens */
+@media (max-width: 991.98px) { /* Corresponds to below Bootstrap's lg breakpoint */
+  .navbar-collapse.show {
+    padding-bottom: 1rem; /* Adjust the padding value as needed */
+  }
+
+  /* Reduce vertical spacing between nav items when collapsed menu is open */
+  /* .navbar-collapse.show .navbar-nav .nav-item {
+    margin-bottom: 0.25rem; /* Adjust this value to control the gap */
+    /* Or target .nav-link if padding is the issue */
+    /* .navbar-collapse.show .navbar-nav .nav-link {
+      padding-top: 0.25rem;
+      padding-bottom: 0.25rem;
+    } */
+  /* } */
+
+  /* Set gap to 0 (or small vertical gap) when collapsed */
+  .navbar-collapse.show .navbar-nav {
+    gap: 0;
+    /* Or use row-gap for vertical spacing only: */
+    /* row-gap: 0.25rem; */
+  }
+}
+
+/* Apply gap for larger screens */
+@media (min-width: 992px) { /* Corresponds to Bootstrap's lg breakpoint */
+  .navbar-nav {
+    gap: 0.5rem; /* Equivalent to Bootstrap's gap-2 */
+  }
+}
+
+/* Seminar Card Action Button Styling */
+.card-action-btn {
+  transition: transform 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  /* z-index: 2; */ /* Uncomment if needed for stacking issues */
+}
+
+.card-action-btn:hover {
+  transform: translateY(-2px) scale(1.03); /* Slight lift and scale */
+  box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  /* z-index: 3; */ /* Ensure hover state is on top if needed */
 }

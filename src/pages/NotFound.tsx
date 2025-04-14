@@ -1,5 +1,4 @@
-
-import { useLocation } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 import { useEffect } from "react";
 
 const NotFound = () => {
@@ -12,14 +11,22 @@ const NotFound = () => {
     );
   }, [location.pathname]);
 
+  // Estimate Navbar + Footer height (e.g., 70px + 80px = 150px).
+  const approxHeaderFooterHeight = "150px";
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+    // Use d-flex for centering. Set min-height using vh and calc().
+    <div
+      className="d-flex align-items-center justify-content-center bg-light"
+      style={{ minHeight: `calc(100vh - ${approxHeaderFooterHeight})` }}
+    >
       <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">404</h1>
-        <p className="text-xl text-gray-600 mb-4">Oops! Page not found</p>
-        <a href="/" className="text-purple-500 hover:text-purple-700 underline">
-          Return to Home
-        </a>
+        {/* Use Bootstrap text utilities */}
+        <h1 className="display-1 fw-bold mb-4">404</h1>
+        <p className="h4 text-muted mb-4">Oops! Trang không tồn tại</p>
+        <Link to="/" className="btn btn-primary">
+          Quay về Trang chủ
+        </Link>
       </div>
     </div>
   );

@@ -1,126 +1,151 @@
-
-import React, { useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
-import SeminarCard from '../components/SeminarCard';
-import { seminars } from '../data/seminars';
-import { Seminar } from '../types';
+import React, { useState, useEffect, useMemo } from "react"; // Import useEffect
+import { useSearchParams, Link } from "react-router-dom";
+import { seminars } from "@/data/seminars";
+import SeminarCard from "@/components/SeminarCard";
+import { Seminar } from "@/types";
+import SearchForm from "@/components/SearchForm";
+import Pagination from "@/components/Pagination";
+import { parseDateString } from "@/utils/dateUtils";
+const ITEMS_PER_PAGE = 6; // Define how many seminars per page
 
 const SeminarListPage: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [searchQuery, setSearchQuery] = useState(searchParams.get('query') || '');
-  const [selectedTopic, setSelectedTopic] = useState(searchParams.get('topic') || '');
-  const [selectedLocation, setSelectedLocation] = useState(searchParams.get('location') || '');
-  
-  // Get unique list of topics and locations for filters
-  const topics = Array.from(new Set(seminars.flatMap(s => s.topics)));
-  const locations = Array.from(new Set(seminars.map(s => s.location.split(',')[0].trim())));
-  
-  const filterSeminars = (seminars: Seminar[]) => {
-    return seminars.filter(seminar => {
-      // Search query filter
-      const matchesQuery = searchQuery === '' || 
-        seminar.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        seminar.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        seminar.presenter.toLowerCase().includes(searchQuery.toLowerCase());
-      
-      // Topic filter
-      const matchesTopic = selectedTopic === '' || 
-        seminar.topics.some(t => t.toLowerCase() === selectedTopic.toLowerCase());
-      
-      // Location filter
-      const matchesLocation = selectedLocation === '' || 
-        seminar.location.toLowerCase().includes(selectedLocation.toLowerCase());
-      
-      return matchesQuery && matchesTopic && matchesLocation;
-    });
+  const initialFilter = searchParams.get("filter") || ""; // Get filter param
+  // State for current page
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const [isLoading, setIsLoading] = useState(true); // Add loading state
+  const [filteredSeminars, setFilteredSeminars] = useState<Seminar[]>([]); // State for filtered results
+
+  // Pagination Calculations
+  const totalPages = Math.ceil(filteredSeminars.length / ITEMS_PER_PAGE);
+  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+  const endIndex = startIndex + ITEMS_PER_PAGE;
+  const paginatedSeminars = filteredSeminars.slice(startIndex, endIndex);
+
+  const handlePageChange = (pageNumber: number) => {
+    if (pageNumber >= 1 && pageNumber <= totalPages) {
+      setCurrentPage(pageNumber);
+      window.scrollTo(0, 0); // Scroll to top on page change
+    }
   };
-  
-  const filteredSeminars = filterSeminars(seminars);
-  
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    // Update URL search params
-    const params: { [key: string]: string } = {};
-    if (searchQuery) params.query = searchQuery;
-    if (selectedTopic) params.topic = selectedTopic;
-    if (selectedLocation) params.location = selectedLocation;
-    
-    setSearchParams(params);
-  };
-  
+
+  useEffect(() => {
+    setIsLoading(true);
+    const query = searchParams.get("query") || "";
+    const topic = searchParams.get("topic") || "";
+    const location = searchParams.get("location") || "";
+    const filter = searchParams.get("filter") || ""; // 'upcoming', 'past', or ''
+
+    // Simulate async filtering if needed, or just filter directly
+    const timer = setTimeout(() => {
+      const today = new Date();
+      today.setHours(0, 0, 0, 0); // For date comparison
+
+      const results = seminars.filter((seminar) => {
+        // Topic Filter
+        if (topic && !seminar.topics.includes(topic)) {
+          return false;
+        }
+        // Location Filter
+        if (location && seminar.location !== location) {
+          return false;
+        }
+        // Search Query Filter
+        const lowerCaseQuery = query.toLowerCase();
+        if (
+          lowerCaseQuery &&
+          !(
+            seminar.title.toLowerCase().includes(lowerCaseQuery) ||
+            seminar.presenter.toLowerCase().includes(lowerCaseQuery) ||
+            seminar.organization.toLowerCase().includes(lowerCaseQuery) ||
+            seminar.description.toLowerCase().includes(lowerCaseQuery)
+          )
+        ) {
+          return false;
+        }
+
+        // Date Filter (Handles 'upcoming' and 'past')
+        const seminarDate = parseDateString(seminar.date);
+        if (filter === "upcoming" && (!seminarDate || seminarDate < today)) {
+          return false;
+        }
+        if (filter === "past" && (!seminarDate || seminarDate >= today)) {
+          return false;
+        }
+
+        return true; // Include seminar if all checks pass
+      });
+
+      setFilteredSeminars(results);
+      setCurrentPage(1); // Reset to page 1 when filters change
+      setIsLoading(false);
+    }, 300); // Simulate delay
+
+    return () => clearTimeout(timer); // Cleanup timeout
+  }, [searchParams]);
+
   return (
     <div className="container py-5">
-      <h1 className="mb-4">Find Seminars</h1>
-      
-      <div className="card shadow-sm mb-5">
-        <div className="card-body p-4">
-          <form onSubmit={handleSearch}>
-            <div className="row g-3">
-              <div className="col-lg-6">
-                <div className="input-group">
-                  <span className="input-group-text bg-white">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                      <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-                    </svg>
-                  </span>
-                  <input
-                    type="text"
-                    className="form-control"
-                    placeholder="Search seminars by title, presenter, or keyword..."
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                  />
-                </div>
-              </div>
-              
-              <div className="col-md-6 col-lg-2">
-                <select
-                  className="form-select"
-                  value={selectedTopic}
-                  onChange={(e) => setSelectedTopic(e.target.value)}
-                >
-                  <option value="">Topic</option>
-                  {topics.map((topic) => (
-                    <option key={topic} value={topic}>{topic}</option>
-                  ))}
-                </select>
-              </div>
-              
-              <div className="col-md-6 col-lg-2">
-                <select
-                  className="form-select"
-                  value={selectedLocation}
-                  onChange={(e) => setSelectedLocation(e.target.value)}
-                >
-                  <option value="">Location</option>
-                  {locations.map((location) => (
-                    <option key={location} value={location}>{location}</option>
-                  ))}
-                </select>
-              </div>
-              
-              <div className="col-md-12 col-lg-2">
-                <button type="submit" className="btn btn-primary w-100">Search</button>
-              </div>
-            </div>
-          </form>
+      {/* Conditionally show title based on filter */}
+      <h1 className="mb-4">
+        {initialFilter === "upcoming" ? "Hội Thảo Sắp Tới" : "Tìm Hội Thảo"}
+      </h1>
+
+      {/* Refined Search and Filter Bar */}
+      {/* Only show full filters if not specifically filtering upcoming */}
+      {initialFilter !== "upcoming" && (
+        <div className="mb-5">
+          <SearchForm
+            searchParams={searchParams}
+            setSearchParams={setSearchParams}
+            initialFilter={initialFilter}
+            setFilteredSeminars={setFilteredSeminars}
+            setIsLoading={setIsLoading}
+          />
         </div>
-      </div>
-      
-      {filteredSeminars.length === 0 ? (
+      )}
+
+      {/* Loading State */}
+      {isLoading ? (
         <div className="text-center py-5">
-          <h3>No seminars found</h3>
-          <p className="text-muted">Try adjusting your search criteria</p>
-        </div>
+          {" "}
+          {/* Wrap spinner and text in this div */}
+          <div className="spinner-border text-primary" role="status">
+            <span className="visually-hidden">Đang tải...</span>
+          </div>
+          <p className="mt-2 text-muted">Đang tải danh sách hội thảo...</p>
+        </div> // Correctly close the loading div
+      ) : /* Seminar List or No Results */
+      paginatedSeminars.length > 0 ? (
+        <>
+          <div className="row g-4">
+            {paginatedSeminars.map((seminar) => (
+              <div key={seminar.id} className="col-md-6 col-xl-4">
+                <SeminarCard seminar={seminar} />
+              </div>
+            ))}
+          </div>
+
+          {/* Pagination Controls */}
+          {totalPages > 1 && (
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={handlePageChange}
+            />
+          )}
+        </>
       ) : (
-        <div className="row g-4">
-          {filteredSeminars.map((seminar) => (
-            <div key={seminar.id} className="col-md-6 col-lg-4">
-              <SeminarCard seminar={seminar} />
-            </div>
-          ))}
-        </div>
+        <div className="text-center py-5 bg-light rounded">
+          {" "}
+          {/* Wrap "No Results" content in this div */}
+          <h3 className="text-muted">Không tìm thấy hội thảo phù hợp.</h3>
+          <p className="mb-4">Hãy thử điều chỉnh bộ lọc hoặc quay lại sau.</p>
+          <Link to="/seminars" className="btn btn-outline-primary">
+            Xóa bộ lọc
+          </Link>
+        </div> // Correctly close the "No Results" div
       )}
     </div>
   );

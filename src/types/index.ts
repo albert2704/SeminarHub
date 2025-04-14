@@ -1,4 +1,3 @@
-
 export interface Seminar {
   id: string;
   title: string;
@@ -7,10 +6,13 @@ export interface Seminar {
   organization: string;
   date: string;
   time: string;
-  timeFrame: string;
   location: string;
   topics: string[];
+  images: string[];
   agenda?: AgendaItem[];
+  latitude?: number; // Add latitude
+  longitude?: number; // Add longitude
+  enrollmentNumber: number; // Add enrollment number
 }
 
 export interface AgendaItem {

@@ -1,97 +1,187 @@
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "sonner"; // Import toast
 
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { Button } from '../components/ui/button';
-import { Input } from '../components/ui/input';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '../components/ui/card';
+// Re-using the SVG icon component from the previous version
+const SeminarHubIcon = ({
+  className,
+  width = "24",
+  height = "24",
+}: {
+  className?: string;
+  width?: string;
+  height?: string;
+}) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={width}
+    height={height}
+    viewBox="0 0 16 16"
+    fill="currentColor"
+    className={className}
+  >
+    <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z" />
+  </svg>
+);
 
-const LoginPage: React.FC = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+// Define props interface to accept setUserRole
+interface LoginPageProps {
+  setUserRole: (role: "user" | "moderator" | "admin" | null) => void;
+}
+
+const LoginPage: React.FC<LoginPageProps> = ({ setUserRole }) => {
+  // Accept setUserRole prop
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState<string | null>(null); // Add error state
   const navigate = useNavigate();
-  
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
+    setError(null); // Clear previous errors
+    console.log("Login attempt:", { email });
+
+    let role: "admin" | "moderator" | "user" | null = null;
+    let redirectPath = "/";
+
     // For demo purposes only
-    if (email === 'admin@example.com' && password === 'password') {
-      // Navigate to admin dashboard
-      navigate('/admin');
-    } else if (email === 'moderator@example.com' && password === 'password') {
-      // Navigate to moderator dashboard
-      navigate('/moderator');
+    if (email === "admin@example.com" && password === "password") {
+      role = "admin";
+      redirectPath = "/admin";
+    } else if (email === "moderator@example.com" && password === "password") {
+      role = "moderator";
+      redirectPath = "/moderator";
+    } else if (email && password) {
+      // Simulate login for any other valid credentials
+      role = "user";
+      redirectPath = "/";
+    }
+
+    if (role) {
+      // Store role in localStorage
+      localStorage.setItem("userRole", role);
+      // Update the state in App component directly
+      setUserRole(role);
+      // Show success toast
+      toast.success("Đăng nhập thành công!");
+      // Navigate to the appropriate page
+      navigate(redirectPath);
     } else {
-      // Navigate to home page as regular user
-      navigate('/');
+      // Handle login failure
+      const errorMessage = "Email hoặc mật khẩu không đúng.";
+      setError(errorMessage); // Set error message
+      toast.error(errorMessage); // Show error toast
+      console.error("Login failed: Invalid credentials");
     }
   };
-  
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-50 to-purple-100 p-4">
-      <div className="w-full max-w-md">
-        <div className="text-center mb-8">
-          <div className="flex justify-center mb-4">
-            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="#8B5CF6" viewBox="0 0 16 16">
-              <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
-            </svg>
-          </div>
-          <h1 className="text-2xl font-bold text-gray-800">Log in to SeminarHub</h1>
-          <p className="text-gray-600">Access your account to manage seminars</p>
-        </div>
-        
-        <Card className="border-purple-100 shadow-lg">
-          <CardHeader className="pb-2">
-            <CardTitle className="text-xl text-center text-purple-800">Welcome Back</CardTitle>
-            <CardDescription className="text-center">Enter your credentials to continue</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <form onSubmit={handleSubmit}>
-              <div className="mb-4">
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">Email</label>
-                <Input
-                  type="email"
-                  id="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="border-purple-200 focus:border-purple-400 focus:ring-purple-400"
-                  placeholder="you@example.com"
-                  required
-                />
-              </div>
-              
-              <div className="mb-6">
-                <div className="flex justify-between items-center mb-1">
-                  <label htmlFor="password" className="block text-sm font-medium text-gray-700">Password</label>
-                  <Link to="#" className="text-sm text-purple-600 hover:text-purple-800">Forgot password?</Link>
-                </div>
-                <Input
-                  type="password"
-                  id="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="border-purple-200 focus:border-purple-400 focus:ring-purple-400"
-                  placeholder="••••••••"
-                  required
-                />
-              </div>
-              
-              <Button type="submit" className="w-full bg-purple-600 hover:bg-purple-700 text-white">
-                Log In
-              </Button>
-            </form>
-          </CardContent>
-          <CardFooter className="flex flex-col items-center border-t border-purple-50 pt-4">
-            <p className="text-sm text-gray-600 mb-4">
-              Don't have an account? <Link to="/signup" className="text-purple-600 hover:text-purple-800 font-medium">Sign up</Link>
-            </p>
-            
-            <div className="text-xs text-gray-500">
-              <p>For demo purposes:</p>
-              <p className="mb-1">Admin: admin@example.com / password</p>
-              <p className="mb-0">Moderator: moderator@example.com / password</p>
+    <div className="container py-5">
+      <div className="row justify-content-center">
+        <div className="col-md-8 col-lg-6 col-xl-5">
+          {/* Header */}
+          <div className="text-center mb-4">
+            <div
+              className="mx-auto d-flex align-items-center justify-content-center bg-light rounded-circle mb-3"
+              style={{ width: "60px", height: "60px" }}
+            >
+              <SeminarHubIcon className="text-primary" width="32" height="32" />
             </div>
-          </CardFooter>
-        </Card>
+            <h1 className="h3 mb-2 fw-bold">Đăng nhập vào SeminarHub</h1>
+            <p className="text-muted">
+              Truy cập tài khoản của bạn để quản lý hội thảo
+            </p>
+          </div>
+          {/* Login Card */}
+          <div className="card shadow-sm">
+            <div className="card-body p-4 p-md-5">
+              <h2 className="card-title text-center h4 mb-4">
+                Chào mừng trở lại
+              </h2>
+              {/* Display error message */}
+              {error && (
+                <div className="alert alert-danger" role="alert">
+                  {error}
+                </div>
+              )}
+              <form onSubmit={handleSubmit}>
+                {/* Email Input */}
+                <div className="mb-3">
+                  <label htmlFor="email" className="form-label">
+                    Địa chỉ email
+                  </label>
+                  <input
+                    type="email"
+                    className="form-control"
+                    id="email"
+                    placeholder="ban@example.com"
+                    required
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                </div>
+
+                {/* Password Input */}
+                <div className="mb-4">
+                  <div className="d-flex justify-content-between align-items-center mb-1">
+                    <label htmlFor="password" className="form-label mb-0">
+                      Mật khẩu
+                    </label>
+                    <Link
+                      to="/forgot-password"
+                      className="form-text text-decoration-none"
+                    >
+                      {" "}
+                      {/* Updated link */}
+                      Quên mật khẩu?
+                    </Link>
+                  </div>
+                  <input
+                    type="password"
+                    className="form-control"
+                    id="password"
+                    placeholder="••••••••"
+                    required
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                </div>
+
+                {/* Submit Button */}
+                <div className="d-grid">
+                  <button type="submit" className="btn btn-primary btn-lg">
+                    Đăng nhập
+                  </button>
+                </div>
+              </form>
+
+              {/* Sign Up Link */}
+              <p className="text-center text-muted mt-4 mb-0">
+                Chưa có tài khoản?{" "}
+                <Link to="/signup" className="fw-medium text-decoration-none">
+                  Đăng ký
+                </Link>
+              </p>
+            </div>
+            {/* Demo Info Footer */}
+            <div className="card-footer bg-light text-center py-3 px-4">
+              <p className="text-muted small mb-1">Tài khoản demo</p>
+              <p className="small mb-0">
+                Kiểm duyệt viên:{" "}
+                <code className="bg-white px-1 rounded">
+                  moderator@example.com
+                </code>{" "}
+                / <code className="bg-white px-1 rounded">password</code>
+              </p>
+              <p className="small mb-1">
+                Quản trị viên:{" "}
+                <code className="bg-white px-1 rounded">admin@example.com</code>{" "}
+                / <code className="bg-white px-1 rounded">password</code>
+              </p>
+            </div>
+          </div>{" "}
+          {/* Add missing closing div */}
+        </div>
       </div>
     </div>
   );

@@ -1,4 +1,3 @@
-
 import { DashboardStats, TopicDistribution, MonthlySeminars } from '../types';
 
 export const dashboardStats: DashboardStats = {
@@ -12,25 +11,25 @@ export const dashboardStats: DashboardStats = {
 };
 
 export const topicDistribution: TopicDistribution[] = [
-  { name: "Physics", value: 26, color: "#6c5ce7" },
-  { name: "Computer Science", value: 21, color: "#74b9ff" },
-  { name: "Biology", value: 17, color: "#0984e3" },
-  { name: "Chemistry", value: 14, color: "#00cec9" },
-  { name: "Mathematics", value: 11, color: "#00b894" },
-  { name: "Medicine", value: 10, color: "#a3e635" }
+  { name: "Vật lý", value: 26, color: "#6c5ce7" },
+  { name: "Khoa học máy tính", value: 21, color: "#74b9ff" },
+  { name: "Sinh học", value: 17, color: "#0984e3" },
+  { name: "Hóa học", value: 14, color: "#00cec9" },
+  { name: "Toán học", value: 11, color: "#00b894" },
+  { name: "Y học", value: 10, color: "#a3e635" }
 ];
 
 export const monthlySeminars: MonthlySeminars[] = [
-  { month: "Jan", count: 4 },
-  { month: "Feb", count: 6 },
-  { month: "Mar", count: 8 },
-  { month: "Apr", count: 10 },
-  { month: "May", count: 12 },
-  { month: "Jun", count: 9 },
-  { month: "Jul", count: 7 },
-  { month: "Aug", count: 5 },
-  { month: "Sep", count: 11 },
-  { month: "Oct", count: 13 },
-  { month: "Nov", count: 10 },
-  { month: "Dec", count: 8 }
+  { month: "Thg 1", count: 4 },
+  { month: "Thg 2", count: 6 },
+  { month: "Thg 3", count: 8 },
+  { month: "Thg 4", count: 10 },
+  { month: "Thg 5", count: 12 },
+  { month: "Thg 6", count: 9 },
+  { month: "Thg 7", count: 7 },
+  { month: "Thg 8", count: 5 },
+  { month: "Thg 9", count: 11 },
+  { month: "Thg 10", count: 13 },
+  { month: "Thg 11", count: 10 },
+  { month: "Thg 12", count: 8 }
 ];

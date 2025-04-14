@@ -1,0 +1,85 @@
+/* Custom topic tag styling */
+.topic-tag {
+  display: inline-block;
+  padding: 0.25em 0.6em;
+  font-size: 0.75em;
+  font-weight: 500;
+  line-height: 1;
+  color: #6c757d; /* Muted text color */
+  background-color: #f8f9fa; /* Light background */
+  border: 1px solid #dee2e6; /* Subtle border */
+  border-radius: 0.25rem;
+  margin-right: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+/* Agenda item styling */
+.agenda-item {
+  position: relative;
+  padding-left: 1.5rem; /* Space for the dot */
+  border-left: 2px solid #e9ecef; /* Vertical line */
+  margin-left: 0.5rem; /* Align with timeline */
+}
+
+.agenda-item::before {
+  content: '';
+  position: absolute;
+  left: -6px; /* Position dot over the line */
+  top: 0.5em; /* Adjust vertical position */
+  width: 10px;
+  height: 10px;
+  background-color: var(--bs-primary); /* Use primary color for dot */
+  border-radius: 50%;
+  border: 2px solid var(--bs-body-bg); /* Match background for cutout effect */
+}
+
+.agenda-item:last-child {
+  border-left: 2px solid transparent; /* Remove line for last item */
+}
+
+.agenda-time {
+  font-weight: 600;
+  display: block;
+  margin-bottom: 0.25rem;
+  color: var(--bs-emphasis-color);
+}
+
+/* Add transition to seminar cards */
+.seminar-card {
+  transition: transform 0.2s ease-in-out, border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  border: 1px solid var(--bs-card-border-color); /* Ensure default border is set */
+}
+
+/* Add hover effect with purple border */
+.seminar-card:hover {
+  transform: translateY(-5px);
+  border-color: #8B5CF6; /* Purple border color */
+  box-shadow: var(--bs-box-shadow-lg) !important; /* Use Bootstrap's large shadow */
+}
+
+/* Hover effect for clickable stat cards */
+.stat-card-link .card {
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.stat-card-link:hover .card {
+  transform: translateY(-3px);
+  box-shadow: var(--bs-box-shadow) !important; /* Use standard shadow on hover */
+  cursor: pointer;
+}
+
+/* Override active nav-tab link color */
+.nav-tabs .nav-link.active,
+.nav-tabs .nav-item.show .nav-link {
+  color: #6D28D9; /* Darker purple text for active tab */
+  background-color: var(--bs-body-bg); /* Keep background same as body */
+  border-color: #e9ecef #e9ecef var(--bs-body-bg); /* Adjust bottom border color */
+  border-bottom: 3px solid #8B5CF6; /* Purple bottom border */
+}
+
+/* Optional: Change hover color for non-active tabs */
+.nav-tabs .nav-link:hover:not(.active) {
+  border-color: #e9ecef #e9ecef #dee2e6;
+  isolation: isolate;
+  color: #8B5CF6; /* Purple text on hover */
+}

@@ -1,53 +1,22 @@
 
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React from 'react';
+import { Link } from 'react-router-dom';
 import { seminars } from '../data/seminars';
 import SeminarCard from '../components/SeminarCard';
-import { Badge } from '../components/ui/badge';
-import { Input } from '../components/ui/input';
-import { Search } from 'lucide-react';
 
 const HomePage: React.FC = () => {
-  const [searchQuery, setSearchQuery] = useState('');
-  const navigate = useNavigate();
   const featuredSeminars = seminars.slice(0, 3);
-  
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (searchQuery.trim()) {
-      navigate(`/seminars?query=${encodeURIComponent(searchQuery.trim())}`);
-    }
-  };
   
   return (
     <>
       <section className="py-5 text-center bg-light">
         <div className="container">
-          <Badge variant="outline" className="bg-purple-100 text-purple-800 border-purple-200 mb-3 px-3 py-1">
-            Scientific Community
-          </Badge>
+          <span className="badge bg-primary bg-opacity-10 text-primary fw-normal px-3 py-2 mb-3">Scientific Community</span>
           <h1 className="display-3 fw-bold mb-3">Discover Scientific Seminars</h1>
           <p className="lead text-muted mx-auto" style={{ maxWidth: '600px' }}>
             Join the global scientific community. Discover, attend, and contribute to
             research seminars around the world.
           </p>
-          
-          <form onSubmit={handleSearch} className="mt-4 mb-4 mx-auto" style={{ maxWidth: '600px' }}>
-            <div className="flex relative">
-              <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                <Search className="h-4 w-4 text-gray-500" />
-              </div>
-              <Input
-                type="search"
-                placeholder="Search seminars by title, presenter, or keyword..."
-                className="pl-10 pr-4 py-2"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-              />
-              <button type="submit" className="btn btn-primary ml-2">Search</button>
-            </div>
-          </form>
-          
           <div className="d-flex justify-content-center gap-2 mt-4">
             <Link to="/seminars" className="btn btn-primary px-4 py-2">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" className="me-2">

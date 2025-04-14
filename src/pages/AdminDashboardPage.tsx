@@ -3,6 +3,7 @@ import React from 'react';
 import { Chart as ChartJS, registerables } from 'chart.js';
 import { Bar, Line, Pie } from 'react-chartjs-2';
 import { useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import { 
   dashboardStats, 
   topicDistribution, 
@@ -20,8 +21,8 @@ const AdminDashboardPage: React.FC = () => {
       {
         label: 'Monthly Seminars',
         data: monthlySeminars.map(item => item.count),
-        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-        borderColor: 'rgba(75, 192, 192, 1)',
+        backgroundColor: 'rgba(139, 92, 246, 0.2)',
+        borderColor: 'rgba(139, 92, 246, 1)',
         borderWidth: 1
       }
     ]
@@ -35,8 +36,8 @@ const AdminDashboardPage: React.FC = () => {
         label: 'New Users',
         data: [120, 150, 180, 170],
         fill: false,
-        backgroundColor: 'rgb(255, 99, 132)',
-        borderColor: 'rgba(255, 99, 132, 0.2)',
+        backgroundColor: 'rgb(139, 92, 246)',
+        borderColor: 'rgba(139, 92, 246, 0.2)',
       },
     ],
   };
@@ -48,7 +49,7 @@ const AdminDashboardPage: React.FC = () => {
       {
         label: 'Seminars by Category',
         data: topicDistribution.map(item => item.value),
-        backgroundColor: topicDistribution.map(item => item.color || 'rgba(75, 192, 192, 0.2)'),
+        backgroundColor: topicDistribution.map(item => item.color || 'rgba(139, 92, 246, 0.2)'),
         borderColor: topicDistribution.map(() => 'rgba(255, 255, 255, 0.5)'),
         borderWidth: 1,
       },
@@ -62,54 +63,62 @@ const AdminDashboardPage: React.FC = () => {
       {/* Stats Overview */}
       <div className="row mb-4">
         <div className="col-md-3">
-          <div className="card bg-primary text-white">
-            <div className="card-body">
-              <h5 className="card-title">Total Seminars</h5>
-              <h2>{dashboardStats.totalSeminars}</h2>
-              <p className="card-text">
-                <small>
-                  <i className="bi bi-arrow-up"></i> {dashboardStats.seminarGrowth}% from last month
-                </small>
-              </p>
+          <Link to="/seminars" className="text-decoration-none">
+            <div className="card bg-primary text-white cursor-pointer hover:opacity-90 transition-opacity">
+              <div className="card-body">
+                <h5 className="card-title">Total Seminars</h5>
+                <h2>{dashboardStats.totalSeminars}</h2>
+                <p className="card-text">
+                  <small>
+                    <i className="bi bi-arrow-up"></i> {dashboardStats.seminarGrowth}% from last month
+                  </small>
+                </p>
+              </div>
             </div>
-          </div>
+          </Link>
         </div>
         <div className="col-md-3">
-          <div className="card bg-success text-white">
-            <div className="card-body">
-              <h5 className="card-title">Total Users</h5>
-              <h2>{dashboardStats.totalUsers}</h2>
-              <p className="card-text">
-                <small>
-                  <i className="bi bi-arrow-up"></i> {dashboardStats.userGrowth}% from last month
-                </small>
-              </p>
+          <Link to="/admin/users" className="text-decoration-none">
+            <div className="card bg-success text-white cursor-pointer hover:opacity-90 transition-opacity">
+              <div className="card-body">
+                <h5 className="card-title">Total Users</h5>
+                <h2>{dashboardStats.totalUsers}</h2>
+                <p className="card-text">
+                  <small>
+                    <i className="bi bi-arrow-up"></i> {dashboardStats.userGrowth}% from last month
+                  </small>
+                </p>
+              </div>
             </div>
-          </div>
+          </Link>
         </div>
         <div className="col-md-3">
-          <div className="card bg-info text-white">
-            <div className="card-body">
-              <h5 className="card-title">Locations</h5>
-              <h2>{dashboardStats.uniqueLocations}</h2>
-              <p className="card-text">
-                <small>
-                  <i className="bi bi-arrow-up"></i> {dashboardStats.locationGrowth}% from last month
-                </small>
-              </p>
+          <Link to="/admin/locations" className="text-decoration-none">
+            <div className="card bg-info text-white cursor-pointer hover:opacity-90 transition-opacity">
+              <div className="card-body">
+                <h5 className="card-title">Locations</h5>
+                <h2>{dashboardStats.uniqueLocations}</h2>
+                <p className="card-text">
+                  <small>
+                    <i className="bi bi-arrow-up"></i> {dashboardStats.locationGrowth}% from last month
+                  </small>
+                </p>
+              </div>
             </div>
-          </div>
+          </Link>
         </div>
         <div className="col-md-3">
-          <div className="card bg-warning text-dark">
-            <div className="card-body">
-              <h5 className="card-title">Upcoming Events</h5>
-              <h2>{dashboardStats.upcomingEvents}</h2>
-              <p className="card-text">
-                <small>Next 30 days</small>
-              </p>
+          <Link to="/seminars?upcoming=true" className="text-decoration-none">
+            <div className="card bg-warning text-dark cursor-pointer hover:opacity-90 transition-opacity">
+              <div className="card-body">
+                <h5 className="card-title">Upcoming Events</h5>
+                <h2>{dashboardStats.upcomingEvents}</h2>
+                <p className="card-text">
+                  <small>Next 30 days</small>
+                </p>
+              </div>
             </div>
-          </div>
+          </Link>
         </div>
       </div>
 

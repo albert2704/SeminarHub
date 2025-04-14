@@ -11,7 +11,7 @@ const Navbar: React.FC<NavbarProps> = ({ userRole }) => {
     <nav className="navbar navbar-expand-lg navbar-light bg-white border-bottom">
       <div className="container">
         <Link className="navbar-brand d-flex align-items-center" to="/">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#6c5ce7" viewBox="0 0 24 24">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#8B5CF6" viewBox="0 0 24 24">
             <path d="M19 4h-1V3c0-.55-.45-1-1-1s-1 .45-1 1v1H8V3c0-.55-.45-1-1-1s-1 .45-1 1v1H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10zm0-12H5V6h14v2z"/>
           </svg>
           <span className="ms-1">SeminarHub</span>

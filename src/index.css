@@ -1,3 +1,4 @@
+
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
 body {
@@ -196,4 +197,34 @@ body {
 .category-pill:hover, .category-pill.active {
   background-color: #8B5CF6;
   color: white;
+}
+
+/* Make sure links are purple */
+a {
+  color: #8B5CF6;
+}
+
+a:hover {
+  color: #7C3AED;
+}
+
+/* Make sure buttons and other elements with blue are changed to purple */
+.btn-link {
+  color: #8B5CF6;
+}
+
+.btn-link:hover {
+  color: #7C3AED;
+}
+
+.text-primary {
+  color: #8B5CF6 !important;
+}
+
+.bg-primary {
+  background-color: #8B5CF6 !important;
+}
+
+.border-primary {
+  border-color: #8B5CF6 !important;
 }

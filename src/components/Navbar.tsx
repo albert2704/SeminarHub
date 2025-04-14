@@ -51,7 +51,7 @@ const Navbar: React.FC<NavbarProps> = ({ userRole }) => {
           
           <div className="d-flex">
             {userRole ? (
-              <Link to="/profile" className="btn btn-outline-primary me-2">
+              <Link to="/login" className="btn btn-outline-primary me-2">
                 <i className="bi bi-person me-1"></i> Profile
               </Link>
             ) : (

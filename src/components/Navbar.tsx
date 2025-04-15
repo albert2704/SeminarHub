@@ -86,12 +86,10 @@ const Navbar: React.FC<NavbarProps> = ({ userRole, onLogout }) => {
           ref={togglerRef} // Keep ref for visibility check
           className="navbar-toggler order-lg-1 border-0 p-1"
           type="button"
-          // data-bs-toggle="collapse" // Can be kept or removed, onClick will handle it
-          // data-bs-target="#navbarNav" // Can be kept or removed
           aria-controls="navbarNav"
           aria-expanded={
             collapseRef.current?.classList.contains("show") ? "true" : "false"
-          } // Dynamically set aria-expanded based on state if possible, or leave to Bootstrap if data-* attributes are kept
+          } // Dynamically set aria-expanded based on state if possible,
           aria-label="Chuyển đổi thanh điều hướng"
           onClick={handleTogglerClick} // Add the click handler
         >
